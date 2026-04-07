@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Wedding of Tony</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: #050505; 
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            color: #d4af37;
+            overflow: hidden;
+        }
+
+        .app-container {
+            width: 100vw;
+            max-width: 450px;
+            height: 100vh;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            box-shadow: inset 0 0 0 2px #d4af37;
+        }
+
+        .app-container::-webkit-scrollbar { display: none; }
+
+        /* FIXED ORNAMENTS */
+        .corner {
+            position: fixed; width: 60px; height: 60px; z-index: 100;
+            border: 1.5px solid #d4af37; pointer-events: none; opacity: 0.5;
+        }
+        .top-left { top: 15px; left: 15px; border-right: none; border-bottom: none; }
+        .bottom-right { bottom: 15px; right: 15px; border-left: none; border-top: none; }
+
+        .section {
+            width: 100%;
+            height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* PHOTO SECTION */
+        .photo-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .photo-frame {
+            width: 200px;
+            height: 280px;
+            border-radius: 100px 100px 0 0;
+            border: 2px solid #d4af37;
+            padding: 8px;
+        }
+        .photo-frame img {
+            width: 100%; height: 100%; object-fit: cover;
+            border-radius: 92px 92px 0 0;
+        }
+
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; color: #fff; line-height: 1.2; }
+        .date-text { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; margin-top: 10px; color: #fff; }
+
+        /* COUNTDOWN */
+        .countdown-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 25px 0;
+            width: 90%;
+        }
+        .time-item { border-bottom: 1px solid rgba(212, 175, 55, 0.5); padding: 5px 0; }
+        .time-item span { display: block; font-size: 1.1rem; color: #fff; }
+        .time-item label { font-size: 0.55rem; letter-spacing: 1px; }
+
+        .btn-gold {
+            border: 1px solid #d4af37; color: #d4af37; padding: 10px 25px;
+            text-decoration: none; font-size: 0.75rem; letter-spacing: 2px;
+            margin-top: 35px;
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.05);
+            transition: 0.3s;
+        }
+        .btn-gold:hover { background: #d4af37; color: #000; }
+
+        .guest-info {
+            margin-top: auto;
+            padding-bottom: 40px;
+        }
+
+        /* REVEAL ANIMATION */
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 1s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="app-container" id="main-scroll">
+        <div class="corner top-left"></div>
+        <div class="corner bottom-right"></div>
+
+        <section class="section">
+            <div class="reveal active" style="width: 100%;">
+                <p style="letter-spacing: 3px; font-size: 0.65rem; margin-bottom: 15px; opacity: 0.8;">THE WEDDING OF</p>
+                
+                <div class="photo-wrapper">
+                    <div class="photo-frame">
+                        <img src="URL_FOTO_LU.jpeg" alt="Tony & Partner">
+                    </div>
+                </div>
+
+                <h1>Tony Hariyanto</h1>
+                <div style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; margin: 5px 0;">&</div>
+                <h1>Masih Belum Ketemu</h1>
+                
+                <p style="font-size: 0.7rem; margin-top: 30px; letter-spacing: 1px;">SCROLL UNTUK DETAIL</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="reveal" style="width: 100%; height: 80%; display: flex; flex-direction: column; align-items: center;">
+                <p style="letter-spacing: 2px; font-size: 0.7rem;">SAVE THE DATE</p>
+                <h2 class="date-text">Minggu, 23 Mei 2027</h2>
+                
+                <div class="countdown-grid" id="timer">
+                    <div class="time-item"><span id="days">00</span><label>Hari</label></div>
+                    <div class="time-item"><span id="hours">00</span><label>Jam</label></div>
+                    <div class="time-item"><span id="mins">00</span><label>Menit</label></div>
+                    <div class="time-item"><span id="secs">00</span><label>Detik</label></div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <p style="font-size: 0.85rem; color: #fff;">Gedung Wanita Nganjuk</p>
+                    <p style="font-size: 0.65rem; opacity: 0.7; margin-top: 5px; padding: 0 10px;">Jl. Yos Sudarso, Payaman, Kec. Nganjuk, Kabupaten Nganjuk</p>
+                </div>
+
+                <a href="https://maps.app.goo.gl/fY7yx96tzkFf1dyV6" class="btn-gold" target="_blank">LIHAT LOKASI</a>
+
+                <div class="guest-info">
+                    <p style="font-size: 0.6rem; letter-spacing: 1px;">UNTUK SAUDARA/I:</p>
+                    <h2 id="guest-name" style="font-family: 'Cormorant Garamond', serif; color: #fff; font-size: 1.6rem; margin-top: 5px;">Tamu Undangan</h2>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 1. TRACKING SPREADSHEET & AMBIL NAMA
+        const params = new URLSearchParams(window.location.search);
+        const to = params.get('to');
+        
+        if (to) {
+            const cleanName = decodeURIComponent(to).replace(/-/g, ' ').replace(/\+/g, ' ');
+            document.getElementById('guest-name').innerText = cleanName;
+
+            // URL Apps Script Lu
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzp8L927mJfXhqu-b1o3OJJEYagLRiaPvuFCyyLYeG_Z4rK5Q6ZxNew1ETg5LDQepNA/exec';
+            
+            // Kirim status "Dibuka" ke Spreadsheet
+            fetch(`${scriptURL}?name=${encodeURIComponent(cleanName)}`, { 
+                method: 'GET',
+                mode: 'no-cors' 
+            })
+            .then(() => console.log('Status terupdate di Sheets!'))
+            .catch(err => console.error('Gagal update status:', err));
+        }
+
+        // 2. SCROLL REVEAL LOGIC
+        const container = document.getElementById('main-scroll');
+        const reveals = document.querySelectorAll('.reveal');
+
+        container.addEventListener('scroll', () => {
+            reveals.forEach(rev => {
+                const rect = rev.getBoundingClientRect();
+                if(rect.top < window.innerHeight * 0.8) {
+                    rev.classList.add('active');
+                }
+            });
+        });
+
+        // 3. COUNTDOWN TIMER
+        const target = new Date("May 23, 2027 08:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = target - now;
+            if(diff > 0) {
+                document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                document.getElementById("mins").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById("secs").innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
